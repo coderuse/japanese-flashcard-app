@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Checkbox } from "antd";
 import { allJapaneseCharacters } from "../data/characterData";
 import { Character } from "../types";
+import { DownOutlined, RightOutlined } from "@ant-design/icons";
 
 const CharacterSelector: React.FC<{
   onChange: (selected: string[]) => void;
@@ -249,20 +250,30 @@ const CharacterSelector: React.FC<{
     return (
       <div style={{ paddingLeft: `${level * 20}px` }}>
         <div style={{ display: "flex", alignItems: "center", margin: "8px 0" }}>
-          {hasChildren && (
-            <span
-              onClick={() => toggleExpand(node.key)}
-              style={{
-                cursor: "pointer",
-                marginRight: "8px",
-                transform: isExpanded ? "rotate(90deg)" : "none",
-                display: "inline-block",
-                transition: "transform 0.2s",
-              }}
-            >
-              ▶
-            </span>
-          )}
+          {/* Arrow icon container */}
+          <div
+            onClick={hasChildren ? () => toggleExpand(node.key) : undefined}
+            style={{
+              cursor: hasChildren ? "pointer" : "default",
+              width: "16px",
+              height: "16px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: "8px",
+              color: "#8c8c8c",
+            }}
+          >
+            {hasChildren ? (
+              isExpanded ? (
+                <DownOutlined style={{ fontSize: "12px" }} />
+              ) : (
+                <RightOutlined style={{ fontSize: "12px" }} />
+              )
+            ) : (
+              <span style={{ width: "12px" }} />
+            )}
+          </div>
 
           <Checkbox
             checked={isChecked}

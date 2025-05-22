@@ -22,11 +22,13 @@ const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
     <div
       className="flashcard-display-area"
       style={{
+        minWidth: '300px',
         marginTop: '20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         gap: '20px',
+        textWrap: 'wrap',
       }}
     >
       {currentCharacter ? (

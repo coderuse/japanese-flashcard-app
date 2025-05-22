@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CharacterSelector from "./components/CharacterSelector";
 import FlashcardViewer from "./components/FlashcardViewer"; // Import the new component
 import { Character } from "./types";
 import { allJapaneseCharacters } from "./data/characterData";
 
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(query);
+    setMatches(mediaQuery.matches);
+
+    const handler = (event: MediaQueryListEvent) => {
+      setMatches(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, [query]);
+
+  return matches;
+}
+
 const App: React.FC = () => {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
   const [currentCharacter, setCurrentCharacter] = useState<Character | null>(
     null
@@ -68,30 +87,38 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="app">
       <h1>Kanji Flashcard Application</h1>
       <div
-        className="app"
         style={{
           display: "flex",
-          alignItems: "flex-start", // Change from "center" to "flex-start"
-          justifyContent: "center", // Keep horizontally centered
-          width: "100%", // Take full width of parent
-          gap: "2rem", // Add spacing between components
+          flexDirection: isDesktop ? "row" : "column-reverse",
+          alignItems: isDesktop ? "flex-start" : "center",
+          justifyContent: isDesktop ? "center" : "flex-start",
+          width: "100%",
+          gap: "2rem",
         }}
       >
         <div
           style={{
             height: "auto",
-            minWidth: "300px",
+            width: "100%",
+            maxWidth: "300px",
             overflowY: "auto",
-            alignSelf: "flex-start",
+            alignSelf: isDesktop ? "flex-start" : "center",
           }}
         >
           <CharacterSelector onChange={handleSelectionChange} />
         </div>
 
-        <div style={{ alignSelf: "flex-start" }}>
+        <div
+          style={{
+            alignSelf: isDesktop ? "flex-start" : "center",
+            width: "100%",
+            maxWidth: "300px",
+            minWidth: isDesktop ? "300px" : "auto",
+          }}
+        >
           <FlashcardViewer
             currentCharacter={currentCharacter}
             onNextCharacter={handleNextCharacter}
@@ -103,7 +130,7 @@ const App: React.FC = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
