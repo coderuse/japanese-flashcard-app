@@ -2,6 +2,7 @@
   "name": "japanese-flashcard-app",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://zoboxhq.github.io/japanese-flashcard-app/",
   "scripts": {
     "start": "vite",
     "build": "vite build",

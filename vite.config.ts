@@ -7,8 +7,9 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
+  base: '/japanese-flashcard-app/',
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
   },
   resolve: {
     alias: {
