@@ -117,6 +117,7 @@ const App: React.FC = () => {
             width: "100%",
             maxWidth: "300px",
             minWidth: isDesktop ? "300px" : "auto",
+            minHeight: "400px",
           }}
         >
           <FlashcardViewer
